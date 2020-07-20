@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Status">
+
+    <ImageButton
+        android:id="@+id/ctrStatusBluetooth"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_bluetooth_24"
+        android:contentDescription="@string/bluetoothStatus"
+        app:layout_constraintEnd_toStartOf="@+id/ctrStatusCloud"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ctrStatusCloud" />
+
+    <ImageButton
+        android:id="@+id/ctrStatusCloud"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_cloud_24"
+        android:contentDescription="@string/cloudStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ctrStatusWiFi"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_wifi_24"
+        android:contentDescription="@string/wifiStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ctrStatusCloud"
+        app:layout_constraintTop_toTopOf="@+id/ctrStatusCloud" />
+
+    <ImageButton
+        android:id="@+id/ctrStatusClock"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_access_time_24"
+        android:contentDescription="@string/clockStatus"
+        app:layout_constraintStart_toStartOf="@+id/ctrStatusBluetooth"
+        app:layout_constraintTop_toBottomOf="@+id/ctrStatusBluetooth" />
+
+    <ImageButton
+        android:id="@+id/ctrStatusGPS"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_gps_fixed_24"
+        android:contentDescription="@string/gpsStatus"
+        app:layout_constraintStart_toStartOf="@+id/ctrStatusCloud"
+        app:layout_constraintTop_toTopOf="@+id/ctrStatusClock" />
+
+    <ImageButton
+        android:id="@+id/ctrOpenConfig"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_settings_24"
+        android:contentDescription="@string/config"
+        app:layout_constraintStart_toStartOf="@+id/ctrStatusWiFi"
+        app:layout_constraintTop_toTopOf="@+id/ctrStatusGPS" />
+
+    <ProgressBar
+        android:id="@+id/ctrLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ctrStatusGPS" />
+</androidx.constraintlayout.widget.ConstraintLayout>

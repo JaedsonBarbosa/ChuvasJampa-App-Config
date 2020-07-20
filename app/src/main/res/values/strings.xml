@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Controle de estações</string>
+    <string name="wifiName">Nome do WiFi</string>
+    <string name="wifiPassword">Senha do WiFi</string>
+    <string name="save">Salvar</string>
+    <string name="registerStation">Cadastrar nova estação?</string>
+    <string name="continuee">Continuar</string>
+    <string name="stationName">Nome da estação</string>
+    <string name="ibgeCode">Código IBGE da cidade</string>
+    <string name="useStationGPS">Usar GPS da estação</string>
+    <string name="homologationMode">Modo de homologação</string>
+    <string name="connect">Conectar</string>
+    <string name="loadingStations">Carregando estações cadastradas...</string>
+    <string name="bluetoothStatus">Status Bluetooth</string>
+    <string name="cloudStatus">Status Nuvem</string>
+    <string name="wifiStatus">Status WiFi</string>
+    <string name="clockStatus">Status Relógio</string>
+    <string name="gpsStatus">Status GPS</string>
+    <string name="config">Configurar</string>
+</resources>

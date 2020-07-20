@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/start">
+    <fragment
+        android:id="@+id/configStation"
+        android:name="com.example.estacao.ConfigStation"
+        android:label="Configuração de estação"
+        tools:layout="@layout/fragment_config_station" />
+    <fragment
+        android:id="@+id/isNewStation"
+        android:name="com.example.estacao.IsNewStation"
+        android:label="Nova estação?"
+        tools:layout="@layout/fragment_is_new_station">
+        <action
+            android:id="@+id/action_isNewStation_to_selectStation"
+            app:destination="@id/selectStation" />
+        <action
+            android:id="@+id/action_isNewStation_to_registerStation"
+            app:destination="@id/registerStation" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerStation"
+        android:name="com.example.estacao.RegisterStation"
+        android:label="Registro de estação"
+        tools:layout="@layout/fragment_register_station">
+        <action
+            android:id="@+id/action_registerStation_to_configStation"
+            app:destination="@id/configStation" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectDevice"
+        android:name="com.example.estacao.SelectDevice"
+        android:label="Seleção de dispositivo"
+        tools:layout="@layout/fragment_select_device">
+        <action
+            android:id="@+id/action_selectDevice_to_isNewStation"
+            app:destination="@id/isNewStation" />
+        <action
+            android:id="@+id/action_selectDevice_to_registerStation"
+            app:destination="@id/registerStation" />
+        <action
+            android:id="@+id/action_selectDevice_to_status"
+            app:destination="@id/status" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectStation"
+        android:name="com.example.estacao.SelectStation"
+        android:label="Seleção de estação"
+        tools:layout="@layout/fragment_select_station">
+        <action
+            android:id="@+id/action_selectStation_to_configStation"
+            app:destination="@id/configStation" />
+    </fragment>
+    <fragment
+        android:id="@+id/start"
+        android:name="com.example.estacao.Start"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/action_start_to_selectDevice"
+            app:destination="@id/selectDevice" />
+    </fragment>
+    <fragment
+        android:id="@+id/status"
+        android:name="com.example.estacao.Status"
+        android:label="Status da estação"
+        tools:layout="@layout/fragment_status">
+        <action
+            android:id="@+id/action_status_to_isNewStation"
+            app:destination="@id/isNewStation" />
+    </fragment>
+</navigation>
