@@ -26,7 +26,7 @@ class Status : Fragment(R.layout.fragment_status) {
         ctrStatusBluetooth.setOnClickListener {
             Snackbar.make(
                 it,
-                "Bluetooth ativado para configuração da estação",
+                getString(R.string.statusBluetooth),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -34,8 +34,8 @@ class Status : Fragment(R.layout.fragment_status) {
         ctrStatusCloud.setOnClickListener {
             Snackbar.make(
                 it,
-                if (currentStatus.cloud) "Todos os dados estão salvos na nuvem"
-                else "Existem dados que faltam ser enviados à nuvem",
+                if (currentStatus.cloud) getString(R.string.statusCloudOK)
+                else getString(R.string.statusCloudNo),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -43,8 +43,8 @@ class Status : Fragment(R.layout.fragment_status) {
         ctrStatusWiFi.setOnClickListener {
             Snackbar.make(
                 it,
-                if (currentStatus.wifi) "Conectado à rede WiFI\n$currentSSID"
-                else "Não está conectado a nenhuma rede WiFI",
+                if (currentStatus.wifi) getString(R.string.statusWiFiOK)
+                else getString(R.string.statusWiFiNo),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -52,9 +52,9 @@ class Status : Fragment(R.layout.fragment_status) {
         ctrStatusClock.setOnClickListener {
             Snackbar.make(
                 it,
-                if (currentStatus.clockGPS) "Relógio configurado pelo GPS"
-                else if (currentStatus.clockNTP) "Relógio sincronizado com a internet"
-                else "Relógio desconfigurado",
+                if (currentStatus.clockGPS) getString(R.string.statusClockGPS)
+                else if (currentStatus.clockNTP) getString(R.string.statusClockNTP)
+                else getString(R.string.statusClockNo),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -62,9 +62,9 @@ class Status : Fragment(R.layout.fragment_status) {
         ctrStatusGPS.setOnClickListener {
             Snackbar.make(
                 it,
-                if (!StationGPSAvailable) "A estação não tem um módulo GPS"
-                else if (currentStatus.gps) "Ao menos uma vez o GPS captou sinal"
-                else "Sem sinal do GPS até agora",
+                if (!StationGPSAvailable) getString(R.string.statusGpsNo)
+                else if (currentStatus.gps) getString(R.string.statusGpsSignalOK)
+                else getString(R.string.statusGpsSignalNo),
                 Snackbar.LENGTH_LONG
             ).show()
         }

@@ -21,8 +21,8 @@ class IsNewStation : Fragment(R.layout.fragment_is_new_station) {
                 )
             } else {
                 Snackbar.make(
-                    view!!,
-                    "Não há fonte de localização disponível",
+                    requireView(),
+                    getString(R.string.noLocationSources),
                     Snackbar.LENGTH_LONG
                 ).show()
             }

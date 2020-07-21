@@ -22,14 +22,14 @@ val RegisteredStationsList = mutableListOf<StationDB>()
 
 class Start : Fragment(R.layout.fragment_start) {
     private fun requestStations(view: View) {
-        val httpAsync = "http://192.168.0.109:5001/chuvasjampa/us-central1/GetEstacoesProprias"
+        "http://192.168.0.109:5001/chuvasjampa/us-central1/GetEstacoesProprias"
             .httpGet()
             .responseJson() { request, response, result ->
                 when (result) {
                     is Result.Failure -> {
-                        val notText = "Erro ao buscar as estações."
+                        val notText = getString(R.string.searchError)
                         val not = Snackbar.make(view, notText, Snackbar.LENGTH_INDEFINITE)
-                        not.setAction("Tentar\nnovamente") { requestStations(view) }
+                        not.setAction(getString(R.string.retry)) { requestStations(view) }
                         not.show()
                     }
                     is Result.Success -> {
@@ -56,7 +56,7 @@ class Start : Fragment(R.layout.fragment_start) {
                                 homologation
                             ))
                         }
-                        activity!!.runOnUiThread {
+                        requireActivity().runOnUiThread {
                             view.findNavController().navigate(R.id.action_start_to_selectDevice)
                         }
                     }

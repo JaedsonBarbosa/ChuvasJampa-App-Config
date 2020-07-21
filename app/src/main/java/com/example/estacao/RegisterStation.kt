@@ -25,7 +25,7 @@ class RegisterStation : Fragment(R.layout.fragment_register_station), View.OnCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!GPSAvailable || !StationGPSAvailable) {
-            val ctrUseStationGPS = view!!.findViewById<Switch>(R.id.ctrUseStationGPS)
+            val ctrUseStationGPS = requireView().findViewById<Switch>(R.id.ctrUseStationGPS)
             ctrUseStationGPS.visibility =  View.GONE
         }
 
@@ -35,34 +35,35 @@ class RegisterStation : Fragment(R.layout.fragment_register_station), View.OnCli
     }
 
     override fun onClick(v0: View?) {
-        val ctrName : TextInputEditText = view!!.findViewById(R.id.ctrName)
-        val ctrCityCode : TextInputEditText = view!!.findViewById(R.id.ctrCityCode)
-        val ctrHomologation : Switch = view!!.findViewById(R.id.ctrHomologation)
+        val ctrName : TextInputEditText = requireView().findViewById(R.id.ctrName)
+        val ctrCityCode : TextInputEditText = requireView().findViewById(R.id.ctrCityCode)
+        val ctrHomologation : Switch = requireView().findViewById(R.id.ctrHomologation)
         currentStation.name = ctrName.text.toString()
         currentStation.cityCode = ctrCityCode.text.toString().toInt()
         currentStation.homologation = ctrHomologation.isChecked
 
-        val ctrUseStationGPS = view!!.findViewById<Switch>(R.id.ctrUseStationGPS)
+        val ctrUseStationGPS = requireView().findViewById<Switch>(R.id.ctrUseStationGPS)
         if (ctrUseStationGPS.isChecked || !GPSAvailable) {
             CurrentCallback = this::onGetGPS
             SendToDevice("{\"metodo\":\"GetGPS\"}")
         } else {
-            locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager =
+                requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val gpsPermission = ActivityCompat.checkSelfPermission(
-                context!!,
+                requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
             if (gpsPermission == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     1000,
-                    1.0f,
+                    1f,
                     this
                 )
             } else {
                 Snackbar.make(
-                    view!!,
-                    "As permissões de acesso não foram concedidas.",
+                    requireView(),
+                    getString(R.string.deniedPermissions),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
@@ -76,7 +77,11 @@ class RegisterStation : Fragment(R.layout.fragment_register_station), View.OnCli
             currentStation.latitude = json["lat"] as Double
             currentStation.longitude = json["lon"] as Double
             save()
-        } else Snackbar.make(view!!, "Sem sinal do GPS", Snackbar.LENGTH_SHORT).show()
+        } else Snackbar.make(
+            requireView(),
+            getString(R.string.gpsNoSignal),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun save() {
@@ -93,16 +98,20 @@ class RegisterStation : Fragment(R.layout.fragment_register_station), View.OnCli
             .responseString() { request, response, result ->
                 when (result) {
                     is Result.Failure -> {
-                        activity!!.runOnUiThread {
-                            Snackbar.make(view!!, "Erro ao salvar", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Tentar\nNovamente") { save() }
-                                .show()
+                        requireActivity().runOnUiThread {
+                            Snackbar.make(
+                                requireView(),
+                                getString(R.string.errorSave),
+                                Snackbar.LENGTH_INDEFINITE
+                            ).setAction(getString(R.string.retry)) { save() }.show()
                         }
                     }
                     is Result.Success -> {
                         currentStation.id = result.get()
-                        activity!!.runOnUiThread {
-                            view!!.findNavController().navigate(R.id.action_registerStation_to_configStation)
+                        requireActivity().runOnUiThread {
+                            requireView()
+                                .findNavController()
+                                .navigate(R.id.action_registerStation_to_configStation)
                         }
                     }
                 }

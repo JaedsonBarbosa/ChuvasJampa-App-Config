@@ -1,13 +1,9 @@
 package com.example.estacao
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.github.kittinunf.fuel.core.extensions.jsonBody
-import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.result.Result;
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
@@ -35,15 +31,23 @@ class ConfigStation : Fragment(R.layout.fragment_config_station) {
         CurrentCallback = {
             val responseBody = JSONObject(it)
             if (responseBody["success"] as Boolean) {
-                activity!!.runOnUiThread {
-                    Snackbar.make(view!!, "Alterações salvas com sucesso", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Fechar") { activity?.finish() }
+                requireActivity().runOnUiThread {
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.successConfig),
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                        .setAction(getString(R.string.close)) { activity?.finish() }
                         .show()
                 }
             } else {
-                activity!!.runOnUiThread {
-                    Snackbar.make(view!!, "Erro ao tentar salvar", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Tentar\nNovamente") { salvar() }
+                requireActivity().runOnUiThread {
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.errorSave),
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                        .setAction(getString(R.string.retry)) { salvar() }
                         .show()
                 }
             }

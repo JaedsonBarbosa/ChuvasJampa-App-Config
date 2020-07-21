@@ -1,12 +1,12 @@
 package com.example.estacao
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.bluetooth.BluetoothDevice
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -39,13 +39,13 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
     lateinit var ctrDevices : Spinner
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val gpsPermission = ActivityCompat.checkSelfPermission(
-            context!!,
+            requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
         )
         if (gpsPermission != PackageManager.PERMISSION_GRANTED) {
             val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
             requestPermissions(permissions, 200)
-        }
+        } else GPSAvailable = true
 
         ctrDevices = view.findViewById(R.id.ctrDevices) as Spinner
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -62,7 +62,11 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::onConnected) {
-                    Snackbar.make(view!!, "Erro na conexão.", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.connectionError),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
@@ -71,8 +75,8 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
         val device = connectedDevice.toSimpleDeviceInterface()
         device.setListeners({ CurrentCallback(it) }, { }) {
             Snackbar.make(
-                view!!,
-                "Erro desconhecido.",
+                requireView(),
+                getString(R.string.unknownError),
                 Snackbar.LENGTH_INDEFINITE
             ).show()
         }
@@ -85,7 +89,7 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
 
             if (StationGPSAvailable || GPSAvailable) {
                 val id = json["idEstacao"] as String
-                val navController = view!!.findNavController()
+                val navController = requireView().findNavController()
                 if (RegisteredStationsList.any { v -> v.id == id }) {
                     currentStation = RegisteredStationsList.first { v -> v.id == id }
                     navController.navigate(R.id.action_selectDevice_to_status)
@@ -98,8 +102,8 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
                 }
             } else {
                 Snackbar.make(
-                    view!!,
-                    "Não há fonte de localização disponível",
+                    requireView(),
+                    getString(R.string.noLocationSources),
                     Snackbar.LENGTH_LONG
                 ).show()
             }
@@ -112,14 +116,7 @@ class SelectDevice : Fragment(R.layout.fragment_select_device) {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             GPSAvailable = true
-        } else {
-            Snackbar.make(
-                view!!,
-                "Apenas o GPS da estação poderá ser usado então.",
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
     }
 }
