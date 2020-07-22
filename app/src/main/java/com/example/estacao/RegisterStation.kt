@@ -92,7 +92,7 @@ class RegisterStation : Fragment(R.layout.fragment_register_station), View.OnCli
         requestBody.put("Longitude", currentStation.longitude)
         requestBody.put("Homologacao", currentStation.homologation)
 
-        "http://192.168.0.109:5001/chuvasjampa/us-central1/CadastrarEstacao"
+        "https://us-central1-chuvasjampa.cloudfunctions.net/CadastrarEstacao"//"http://192.168.0.109:5001/chuvasjampa/us-central1/CadastrarEstacao"
             .httpPost()
             .jsonBody(requestBody.toString())
             .responseString() { request, response, result ->

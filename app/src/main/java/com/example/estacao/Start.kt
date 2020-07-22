@@ -22,7 +22,7 @@ val RegisteredStationsList = mutableListOf<StationDB>()
 
 class Start : Fragment(R.layout.fragment_start) {
     private fun requestStations(view: View) {
-        "http://192.168.0.109:5001/chuvasjampa/us-central1/GetEstacoesProprias"
+        "https://us-central1-chuvasjampa.cloudfunctions.net/GetEstacoesProprias"//"http://192.168.0.109:5001/chuvasjampa/us-central1/GetEstacoesProprias"
             .httpGet()
             .responseJson() { request, response, result ->
                 when (result) {
